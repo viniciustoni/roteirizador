@@ -43,16 +43,16 @@ public class RoteirizadorController {
 	private RoteirizadorService roteirizadorService;
 
 	/**
-	 * Consulta uma malha de roteiro.
+	 * Remove um mapa de roteiro.
 	 * 
-	 * @param malha
+	 * @param nomMapaRoteiro
 	 * @return Dados da consulta da malha
 	 */
-	@RequestMapping(value = "/roteirizador/roteiro/removeRoteiro", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/roteirizador/roteiro/removeMapaRoteiro", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Remove um roteiro", notes = "Remove um roteiro.")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Roteiro deletado com sucesso"), })
 	@Transactional
-	public @ResponseBody void removeRoteiro(
+	public @ResponseBody void removeMapaRoteiro(
 			@RequestBody @NotEmpty String nomMapaRoteiro) {
 		logger.info("Apagando roteiro.");
 		mapaRoteiroService.removeMapaRoteiro(nomMapaRoteiro);
@@ -64,11 +64,11 @@ public class RoteirizadorController {
 	 * @param malha
 	 * @return Dados da consulta da malha
 	 */
-	@RequestMapping(value = "/roteirizador/roteiro/consultaRoteiro", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	@ApiOperation(value = "Consulta um roteiro", notes = "Consulta por um roteiro.")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "Cadastro efetuado com sucesso"), })
+	@RequestMapping(value = "/roteirizador/roteiro/calculaRoteiro", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@ApiOperation(value = "Calcula o roteiro", notes = "Calculo de roteiro.")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Calculo do roteiro efetuado com sucesso."), })
 	@Transactional
-	public @ResponseBody RetornoConsultaRoteiroTO consultaRoteiro(
+	public @ResponseBody RetornoConsultaRoteiroTO calculaRoteiro(
 			@RequestBody @Valid ConsultaRoteiroTO consultaRoteiroTO) {
 		logger.info("Roteirização.");
 		final RetornoConsultaRoteiroTO retornoConsultaRoteiroTO = roteirizadorService.calculaRoteiro(consultaRoteiroTO);
@@ -80,13 +80,13 @@ public class RoteirizadorController {
 	 * 
 	 * @param malha
 	 */
-	@RequestMapping(value = "/roteirizador/roteiro/cadastraMalha", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ApiOperation(value = "Cadastra a malha de endereços", notes = "Cadastra uma malha para roteirização.")
+	@RequestMapping(value = "/roteirizador/roteiro/cadastraMapaRoteiro", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ApiOperation(value = "Cadastra um mapa de roteiros", notes = "Cadastra uma mapa de roteiro para roteirização.")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Cadastro efetuado com sucesso"), })
 	@Transactional
-	public @ResponseBody void cadastraMalha(@RequestBody @Valid MapaRoteiroTO malhaTO) {
-		logger.info("cadastraMalha.");
-		mapaRoteiroService.gravaMapaRoteiro(malhaTO);
+	public @ResponseBody void cadastraMapaRoteiro(@RequestBody @Valid MapaRoteiroTO mapaRoteiroTO) {
+		logger.info("cadastraMapaRoteiro.");
+		mapaRoteiroService.gravaMapaRoteiro(mapaRoteiroTO);
 	}
 
 }
